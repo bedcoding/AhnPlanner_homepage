@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title> hell world! </title>
+<title> hell world!! </title>
 </head>
 <body>
 	<script>
