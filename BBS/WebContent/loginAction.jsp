@@ -16,7 +16,7 @@
 <!-- 실질적으로 사용자의 로그인 시도를 처리 -->
 <body>
 	<%
-		UserDAO userDAO = new UserDAO();
+		UserDAO userDAO = new UserDAO();  // DB에 접근할 수 있는 객체 만들기
 		int result = userDAO.login(user.getUserID(), user.getUserPassword());
 		if(result == 1) {
 			PrintWriter script = response.getWriter();
