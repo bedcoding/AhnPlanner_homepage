@@ -19,6 +19,20 @@
 <!-- 실질적으로 사용자의 로그인 시도를 처리 -->
 <body>
 	<%
+		// 이미 로그인이 되어 있는 경우
+		String userID = null;
+		if(session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+		
+		if(userID != null) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('이미 로그인이 되어있습니다.')");
+			script.println("location.href = 'main.jsp'");
+			script.println("</script>");
+		}
+	
 		// 아무것도 입력 안한 경우
 		if(user.getUserID() == null || user.getUserPassword() == null || user.getUserName() == null
 			|| user.getUserGender() == null || user.getUserEmail() == null) {
@@ -39,6 +53,7 @@
 			}
 			
 			else {   // 회원가입이 완료되면 메인화면으로 이동
+				session.setAttribute("userID", user.getUserID());  // 로그인 성공시 : 세션부여
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("location.href = 'main.jsp'");

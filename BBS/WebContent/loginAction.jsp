@@ -16,9 +16,26 @@
 <!-- 실질적으로 사용자의 로그인 시도를 처리 -->
 <body>
 	<%
+		// 이미 로그인이 되어 있는 경우
+		String userID = null;  
+		if(session.getAttribute("userID") != null) {
+			userID = (String) session.getAttribute("userID");
+		}
+		
+		if(userID != null) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('이미 로그인이 되어있습니다.')");
+			script.println("location.href = 'main.jsp'");
+			script.println("</script>");
+		}
+		
+		
+		// 로그인이 안된 경우
 		UserDAO userDAO = new UserDAO();  // DB에 접근할 수 있는 객체 만들기
 		int result = userDAO.login(user.getUserID(), user.getUserPassword());
 		if(result == 1) {
+			session.setAttribute("userID", user.getUserID());  // 세션 추가
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("location.href = 'main.jsp'");

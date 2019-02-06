@@ -2,13 +2,16 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 <meta charset="UTF-8">
 <title> JSP 게시판 웹 사이트 </title>
 </head>
 <body>
+	<%
+		session.invalidate();
+	%>
 	<script>
-		location.href = 'main.jsp';  // 첫 페이지 경로
+		location.href = 'main.jsp';
 	</script>
 </body>
 </html>
