@@ -37,8 +37,8 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav"> 
 				<!-- class="active"를 통해 현재 접속한 페이지를 표시한다 -->
-				<li class="active"><a href="main.jsp">메인</a></li>
-				<li><a href="bbs.jsp">게시판</a></li>
+				<li><a href="main.jsp">메인</a></li> 
+				<li class="active"><a href="bbs.jsp">게시판</a></li>
 			</ul>
 			<%
 				// 로그인이 되어 있지 않는 경우
@@ -74,7 +74,30 @@
 			%>
 		</div>	
 	</nav>
-	
+	<div class="container">
+		<div class="row">
+			<table class="table table-striped" style="text-align; center; border; 1px solid #dddddd">
+				<thead>
+					<tr>
+						<th style="background-color; #eeeeee; text-align; center;"> 번호 </th>
+						<th style="background-color; #eeeeee; text-align; center;"> 제목 </th>
+						<th style="background-color; #eeeeee; text-align; center;"> 작성자 </th>
+						<th style="background-color; #eeeeee; text-align; center;"> 작성일 </th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr>
+						<td> 1 </td>
+						<td> 학습플래너 </td>
+						<td> 안성민 </td>
+						<td> 2019.01.01 </td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="write.jsp" class="btn btn-primary pull-right"> 글쓰기 </a>
+		</div>
+	</div>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>
