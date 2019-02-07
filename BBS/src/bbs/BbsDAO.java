@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 // 데이터베이스 접근 객체의 약자 (실질적으로 데이터베이스에서 회원 정보를 불러오거나 넣고자 할 때 사용)
 public class BbsDAO {
@@ -76,5 +77,53 @@ public class BbsDAO {
 			e.printStackTrace();
 		}
 		return -1;  // 데이터베이스 오류
-	}	
+	}
+	
+	
+	// 특정한 페이지에 따른 총 10개의 게시글을 가져옴
+	public ArrayList<Bbs> getList(int pageNumber) {
+		// bbsAvailable = 1 : 삭제가 되지 않아서 Available이 1인 글만 가져옴
+		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
+		ArrayList<Bbs> list = new ArrayList<Bbs>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  getNext() - (pageNumber - 1) * 10);  
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setBbsID(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setUserID(rs.getString(3));
+				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsContent(rs.getString(5));
+				bbs.setBbsAvailable(rs.getInt(6));
+				list.add(bbs);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;  // 게시글 리스트 10개 보여주기
+	}
+	
+	
+	// 페이징 처리를 위해 존재하는 함수
+	public boolean nextPage(int pageNumber) {
+		// bbsAvailable = 1 : 삭제가 되지 않아서 Available이 1인 글만 가져옴
+		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  getNext() - (pageNumber - 1) * 10);  
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return true;  // 다음 페이지로 넘어갈 수 있음을 알려주는 함수 (다음 페이지가 존재하는가?)
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
