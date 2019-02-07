@@ -126,4 +126,32 @@ public class BbsDAO {
 		}
 		return false;
 	}
+	
+	
+	// 하나의 글 내용을 불러오는 함수
+	public Bbs getBbs(int bbsID) {
+		// bbsAvailable = 1 : 삭제가 되지 않아서 Available이 1인 글만 가져옴
+		String SQL = "SELECT * FROM BBS WHERE bbsID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsID);  
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				Bbs bbs = new Bbs();
+				bbs.setBbsID(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setUserID(rs.getString(3));
+				bbs.setBbsDate(rs.getString(4));
+				bbs.setBbsContent(rs.getString(5));
+				bbs.setBbsAvailable(rs.getInt(6));
+				return bbs;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 }
